@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.modal-create-product {
+    display: none;
+}
+
+.modal-create-product.active {
+    display: block;
+}
