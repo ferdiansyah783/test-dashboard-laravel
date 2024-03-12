@@ -17,6 +17,9 @@ return new class extends Migration
             $table->foreignId('customer_id')->nullable()->constrained(
                 table: 'users', indexName: 'transactions_customer_id'
             );
+            $table->foreignId('seller_id')->nullable()->constrained(
+                table: 'users', indexName: 'transactions_seller_id'
+            );
             $table->foreignId('product_id')->nullable()->constrained();
             $table->integer('quantity')->nullable();
             $table->decimal('total_amount', 10, 2);

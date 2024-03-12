@@ -26,16 +26,24 @@ class TransactionRepositoryImplement extends Eloquent implements TransactionRepo
         return $this->model->create($data);
     }
 
-    public function findAll(Request $request)
+    public function findAll(Request $request, $user_id)
     {
         return $this->model->with(['product', 'customer'])
-            ->whereHas('product', function ($query) use ($request) {
-                $query->where('name', 'like', "%$request->search%");
+            ->where('seller_id', $user_id)
+            ->where(function ($query) use ($request) {
+                $query->whereHas('product', function ($query) use ($request) {
+                    $query->where('name', 'like', "%$request->search%");
+                })
+                    ->orWhereHas('customer', function ($query) use ($request) {
+                        $query->where('name', 'like', "%$request->search%");
+                    })
+                    ->orWhere('reference_number', 'like', "%$request->search%");
             })
-            ->orWhereHas('customer', function ($query) use ($request) {
-                $query->where('name', 'like', "%$request->search%");
-            })
-            ->orWhere('reference_number', 'like', "%$request->search%")
             ->paginate(5);
+    }
+
+    public function findTransactionByCustomerId($id)
+    {
+        return $this->model->with(['product', 'customer'])->where('customer_id', $id)->get();
     }
 }

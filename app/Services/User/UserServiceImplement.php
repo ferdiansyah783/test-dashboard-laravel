@@ -4,6 +4,7 @@ namespace App\Services\User;
 
 use LaravelEasyRepository\Service;
 use App\Repositories\User\UserRepository;
+use Illuminate\Support\Facades\Hash;
 
 class UserServiceImplement extends Service implements UserService{
 
@@ -18,5 +19,9 @@ class UserServiceImplement extends Service implements UserService{
       $this->mainRepository = $mainRepository;
     }
 
-    // Define your custom methods :)
+    public function create($data)
+    {
+        $data['password'] = Hash::make($data['password']);
+        return $this->mainRepository->create($data);
+    }
 }

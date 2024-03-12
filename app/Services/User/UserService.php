@@ -6,5 +6,5 @@ use LaravelEasyRepository\BaseService;
 
 interface UserService extends BaseService{
 
-    // Write something awesome :)
+    public function create($data);
 }

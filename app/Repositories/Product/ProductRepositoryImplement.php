@@ -21,13 +21,16 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository
         $this->model = $model;
     }
 
-    public function findAll(Request $request)
+    public function findAll(Request $request, $user_id)
     {
         return $this->model
-            ->where('name', 'like', "%$request->search%")
-            ->orWhere('description', 'like', "%$request->search%")
-            ->orWhere('price', 'like', "%$request->search%")
-            ->orWhere('stock', 'like', "%$request->search%")
+            ->where('user_id', $user_id)
+            ->where(function ($query) use ($request) {
+                $query->where('name', 'like', "%{$request->search}%")
+                    ->orWhere('description', 'like', "%{$request->search}%")
+                    ->orWhere('price', 'like', "%{$request->search}%")
+                    ->orWhere('stock', 'like', "%{$request->search}%");
+            })
             ->paginate(5);
     }
 

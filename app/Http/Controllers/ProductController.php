@@ -31,7 +31,7 @@ class ProductController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        $products = $this->productService->findAll($request);
+        $products = $this->productService->findAll($request, $user->id);
 
         return view('backstore.home', compact('products'));
     }

@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,13 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/profile', function () {
-    return view('frontstore.profile');
-})->middleware('auth')->name('profile');
-
-Route::get('/login', [LoginController::class, 'show'])->name('login');
-Route::post('/login', [LoginController::class, 'authenticate']);
-Route::post('/logout', [LogoutController::class, 'logout'])->middleware('auth')->name('logout');
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login', [AuthController::class, 'authenticate']);
+Route::get('/register', [AuthController::class, 'signup'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 
 
 Route::middleware('auth')->group(function () {
@@ -32,4 +30,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/backstore', [ProductController::class, 'backstore'])->name('backstore');
     Route::resource('transaction', TransactionController::class);
     Route::get('/backstore/transaction', [TransactionController::class, 'index'])->name('transaction');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 });

@@ -7,5 +7,5 @@ use LaravelEasyRepository\BaseService;
 
 interface ProductService extends BaseService{
 
-    public function findAll(Request $request);
+    public function findAll(Request $request, $user_id);
 }

@@ -5,6 +5,7 @@
             @csrf
             @method($method)
             <input type="hidden" id="product_id" name="product_id">
+            <input type="hidden" id="seller_id" name="seller_id">
             <div class="mb-3">
                 <label for="name" class="block text-gray-700 font-semibold mb-2">Product Name:</label>
                 <input type="text" id="name" name="name" readonly

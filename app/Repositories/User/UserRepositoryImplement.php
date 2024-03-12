@@ -18,4 +18,9 @@ class UserRepositoryImplement extends Eloquent implements UserRepository{
     {
         $this->model = $model;
     }
+
+    public function create($data)
+    {
+        return $this->model->create($data);
+    }
 }

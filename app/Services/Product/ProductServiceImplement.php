@@ -19,9 +19,9 @@ class ProductServiceImplement extends Service implements ProductService{
       $this->mainRepository = $mainRepository;
     }
 
-    public function findAll(Request $request)
+    public function findAll(Request $request, $user_id)
     {
-        return $this->mainRepository->findAll($request);
+        return $this->mainRepository->findAll($request, $user_id);
     }
 
     public function update($id, $data)

@@ -9,5 +9,7 @@ interface TransactionService extends BaseService{
 
     public function create($data);
 
-    public function findAll(Request $request);
+    public function findAll(Request $request, $user_id);
+
+    public function findTransactionByCustomerId($id);
 }

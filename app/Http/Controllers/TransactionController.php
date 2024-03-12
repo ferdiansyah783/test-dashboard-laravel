@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\Transaction\TransactionService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class TransactionController extends Controller
 {
@@ -16,7 +17,13 @@ class TransactionController extends Controller
 
     public function index(Request $request)
     {
-        $transactions = $this->transactionService->findAll($request);
+        $user = $request->user();
+
+        if (Gate::denies('viewBackstore', $user)) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $transactions = $this->transactionService->findAll($request, $user->id);
 
         return view('backstore.transactoin', compact('transactions'));
     }
@@ -26,7 +33,8 @@ class TransactionController extends Controller
         $request->validate([
             'quantity' => 'required',
             'product_id' => 'required',
-            'total_amount' => 'required'
+            'total_amount' => 'required',
+            'seller_id' => 'required'
         ]);
 
         $data = $request->all();
