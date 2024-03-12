@@ -11,5 +11,7 @@ interface TransactionRepository extends Repository{
 
     public function findAll(Request $request, $user_id);
 
+    public function findCustomerTransactions(Request $request, $user_id);
+
     public function findTransactionByCustomerId($id);
 }

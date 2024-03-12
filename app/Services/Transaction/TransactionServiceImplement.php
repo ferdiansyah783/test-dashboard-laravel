@@ -30,6 +30,11 @@ class TransactionServiceImplement extends Service implements TransactionService{
         return $this->mainRepository->findAll($request, $user_id);
     }
 
+    public function findCustomerTransactions(Request $request, $user_id)
+    {
+        return $this->mainRepository->findCustomerTransactions($request, $user_id);
+    }
+
     public function findTransactionByCustomerId($id)
     {
         return $this->mainRepository->findTransactionByCustomerId($id);

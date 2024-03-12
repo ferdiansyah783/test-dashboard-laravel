@@ -39,7 +39,7 @@
                             <span class="text-sm leading-4">{{ $description }}</span>
                         </div>
                         <div class="flex items-center justify-between mb-3">
-                            <span class="text-sm text-gray-600 dark:text-white">{{ $transaction->quantity }} product</span>
+                            <span class="text-sm text-gray-600 dark:text-white">{{ $transaction->quantity }} quantity</span>
                             <p class="text-orange-500">${{ $transaction->total_amount }}</p>
                         </div>
                         <div class="flex items-center justify-center">

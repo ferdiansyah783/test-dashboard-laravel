@@ -42,6 +42,22 @@ class TransactionRepositoryImplement extends Eloquent implements TransactionRepo
             ->paginate(5);
     }
 
+    public function findCustomerTransactions(Request $request, $user_id)
+    {
+       return $this->model->with(['product', 'customer'])
+            ->where('customer_id', $user_id)
+            ->where(function ($query) use ($request) {
+                $query->whereHas('product', function ($query) use ($request) {
+                    $query->where('name', 'like', "%$request->search%");
+                })
+                    ->orWhereHas('customer', function ($query) use ($request) {
+                        $query->where('name', 'like', "%$request->search%");
+                    })
+                    ->orWhere('reference_number', 'like', "%$request->search%");
+            })
+            ->paginate(5);
+    }
+
     public function findTransactionByCustomerId($id)
     {
         return $this->model->with(['product', 'customer'])->where('customer_id', $id)->get();

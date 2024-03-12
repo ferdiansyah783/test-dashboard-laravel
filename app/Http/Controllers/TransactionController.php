@@ -15,7 +15,7 @@ class TransactionController extends Controller
         $this->transactionService = $transactionService;
     }
 
-    public function index(Request $request)
+    public function backstore(Request $request)
     {
         $user = $request->user();
 
@@ -26,6 +26,19 @@ class TransactionController extends Controller
         $transactions = $this->transactionService->findAll($request, $user->id);
 
         return view('backstore.transactoin', compact('transactions'));
+    }
+
+    public function frontstore(Request $request)
+    {
+        $user = $request->user();
+
+        if (Gate::denies('viewFrontstore', $user)) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $transactions = $this->transactionService->findCustomerTransactions($request, $user->id);
+
+        return view('frontstore.transaction', compact('transactions'));
     }
 
     public function store(Request $request)

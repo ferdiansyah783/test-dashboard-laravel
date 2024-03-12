@@ -26,9 +26,10 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->n
 
 Route::middleware('auth')->group(function () {
     Route::resource('product', ProductController::class);
+    Route::resource('transaction', TransactionController::class);
     Route::get('/', [ProductController::class, 'index'])->name('home');
     Route::get('/backstore', [ProductController::class, 'backstore'])->name('backstore');
-    Route::resource('transaction', TransactionController::class);
-    Route::get('/backstore/transaction', [TransactionController::class, 'index'])->name('transaction');
+    Route::get('/backstore/transaction', [TransactionController::class, 'backstore'])->name('transaction');
+    Route::get('/transactions', [TransactionController::class, 'frontstore'])->name('forntstore.transaction');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 });

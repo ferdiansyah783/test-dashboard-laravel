@@ -16,8 +16,14 @@ class ProductController extends Controller
         $this->productService = $productService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $user = $request->user();
+
+        if (Gate::denies('viewFrontstore', $user)) {
+            abort(403, 'Unauthorized action.');
+        }
+        
         $products = $this->productService->all();
 
         return view('frontstore.home', compact('products'));

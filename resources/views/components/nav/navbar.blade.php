@@ -4,6 +4,9 @@
             <a href="/product">Products</a>
         </li>
         <li>
+            <a href="{{ route('forntstore.transaction') }}">Transactions</a>
+        </li>
+        <li>
             <a href="/profile">Profile</a>
         </li>
         <li>
